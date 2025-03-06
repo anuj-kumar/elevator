@@ -14,13 +14,14 @@ import (
 )
 
 func main() {
-	lifts := make([]lift.ILift, 4)
+	var liftCount uint = 1
+	lifts := make([]lift.ILift, liftCount)
 	ctx := context.Background()
 	timeoutCtx, cancel := context.WithTimeout(ctx, 1*time.Minute)
 	defer cancel()
 	var i uint
-	for i = range 4 {
-		lifts[i] = lift.NewModel(i+1, 100)
+	for i = range liftCount {
+		lifts[i] = lift.NewLiftImpl(i+1, 100)
 		go lifts[i].Operate((timeoutCtx))
 	}
 

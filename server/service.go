@@ -2,6 +2,7 @@ package server
 
 import (
 	"context"
+	"math"
 
 	"anujkumar.com/elevator/lift"
 	"anujkumar.com/elevator/models"
@@ -21,7 +22,7 @@ func (s *simpleAssignmentStrategy) Assign(ctx context.Context, req models.Reques
 	// Assign the nearest lift
 	var target lift.ILift
 	for _, l := range s.Lifts {
-		if target == nil || l.GetCurrentFloor(ctx)-req.Source < target.GetCurrentFloor(ctx)-req.Source {
+		if target == nil || math.Abs(float64(l.GetCurrentFloor(ctx)-req.Source)) < math.Abs(float64(target.GetCurrentFloor(ctx)-req.Source)) {
 			target = l
 		}
 	}
